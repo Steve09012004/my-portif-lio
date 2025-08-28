@@ -34,6 +34,7 @@ CSRF_TRUSTED_ORIGINS = [
     'https://8000-i5gfaprikc2bjns57jp09-b3255c58.manusvm.computer',
     'http://localhost:8000',
     'http://127.0.0.1:8000',
+    '*'
 ]
 
 
