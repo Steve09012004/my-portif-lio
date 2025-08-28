@@ -1,0 +1,475 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Hero Section -->
+<section id="home" class="hero">
+    <div class="hero-background">
+        <div class="hero-particles"></div>
+    </div>
+    
+    <div class="container">
+        <div class="hero-content" data-aos="fade-up" data-aos-duration="1000">
+            <h1 class="hero-title">
+                Desenvolvo <span class="gradient-text">Sites</span>, 
+                <span class="gradient-text">Sistemas</span> e 
+                <span class="gradient-text">Aplicativos</span>
+            </h1>
+            <p class="hero-subtitle">
+                Transformo suas ideias em soluções digitais modernas e eficientes. 
+                Especialista em desenvolvimento full-stack com foco em resultados.
+            </p>
+            
+            <div class="hero-stats">
+                <div class="stat-item" data-aos="fade-up" data-aos-delay="200">
+                    <span class="stat-number">50+</span>
+                    <span class="stat-label">Projetos Entregues</span>
+                </div>
+                <div class="stat-item" data-aos="fade-up" data-aos-delay="400">
+                    <span class="stat-number">3+</span>
+                    <span class="stat-label">Anos de Experiência</span>
+                </div>
+                <div class="stat-item" data-aos="fade-up" data-aos-delay="600">
+                    <span class="stat-number">100%</span>
+                    <span class="stat-label">Clientes Satisfeitos</span>
+                </div>
+            </div>
+            
+            <div class="hero-buttons" data-aos="fade-up" data-aos-delay="800">
+                <a href="#portfolio" class="btn btn-primary">Ver Portfólio</a>
+                <a href="#contact" class="btn btn-secondary">Solicitar Orçamento</a>
+            </div>
+        </div>
+        
+        <div class="hero-image" data-aos="fade-left" data-aos-delay="1000">
+            <div class="hero-card">
+                <div class="code-preview">
+                    <div class="code-header">
+                        <div class="code-dots">
+                            <span class="dot red"></span>
+                            <span class="dot yellow"></span>
+                            <span class="dot green"></span>
+                        </div>
+                        <span class="code-title">projeto.js</span>
+                    </div>
+                    <div class="code-content">
+                        <div class="code-line">
+                            <span class="code-keyword">const</span> 
+                            <span class="code-variable">desenvolvedor</span> = {
+                        </div>
+                        <div class="code-line">
+                            &nbsp;&nbsp;<span class="code-property">nome</span>: 
+                            <span class="code-string">'DevPro'</span>,
+                        </div>
+                        <div class="code-line">
+                            &nbsp;&nbsp;<span class="code-property">especialidades</span>: [
+                        </div>
+                        <div class="code-line">
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">'Frontend'</span>,
+                        </div>
+                        <div class="code-line">
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">'Backend'</span>,
+                        </div>
+                        <div class="code-line">
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">'Mobile'</span>
+                        </div>
+                        <div class="code-line">
+                            &nbsp;&nbsp;],
+                        </div>
+                        <div class="code-line">
+                            &nbsp;&nbsp;<span class="code-property">qualidade</span>: 
+                            <span class="code-string">'premium'</span>
+                        </div>
+                        <div class="code-line">};
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- About Section -->
+<section id="about" class="about">
+    <div class="container">
+        <div class="section-header" data-aos="fade-up">
+            <h2 class="section-title">Sobre Mim</h2>
+            <p class="section-subtitle">Conheça minha trajetória e expertise</p>
+        </div>
+        
+        <div class="about-content">
+            <div class="about-text" data-aos="fade-right">
+                <h3>Desenvolvedor Full Stack Apaixonado por Tecnologia</h3>
+                <p>
+                    Com mais de 3 anos de experiência no mercado de desenvolvimento, 
+                    especializo-me em criar soluções digitais que realmente fazem a diferença 
+                    para empresas e empreendedores.
+                </p>
+                <p>
+                    Minha abordagem combina design moderno, código limpo e as melhores 
+                    práticas de desenvolvimento para entregar projetos que superam expectativas.
+                </p>
+                
+                <div class="skills-grid">
+                    <div class="skill-item">
+                        <i class="fab fa-html5"></i>
+                        <span>HTML5 & CSS3</span>
+                    </div>
+                    <div class="skill-item">
+                        <i class="fab fa-js-square"></i>
+                        <span>JavaScript</span>
+                    </div>
+                    <div class="skill-item">
+                        <i class="fab fa-react"></i>
+                        <span>React</span>
+                    </div>
+                    <div class="skill-item">
+                        <i class="fab fa-python"></i>
+                        <span>Python</span>
+                    </div>
+                    <div class="skill-item">
+                        <i class="fas fa-database"></i>
+                        <span>Banco de Dados</span>
+                    </div>
+                    <div class="skill-item">
+                        <i class="fab fa-aws"></i>
+                        <span>Cloud</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="about-image" data-aos="fade-left">
+                <div class="about-card">
+                    <div class="card-content">
+                        <div class="profile-image">
+                            <img src="{% static 'img/developer-avatar.jpg' %}" alt="Desenvolvedor" />
+                        </div>
+                        <div class="achievements">
+                            <div class="achievement">
+                                <i class="fas fa-trophy"></i>
+                                <span>Projetos de Sucesso</span>
+                            </div>
+                            <div class="achievement">
+                                <i class="fas fa-clock"></i>
+                                <span>Entrega no Prazo</span>
+                            </div>
+                            <div class="achievement">
+                                <i class="fas fa-handshake"></i>
+                                <span>Suporte Contínuo</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Portfolio Section -->
+<section id="portfolio" class="portfolio">
+    <div class="container">
+        <div class="section-header" data-aos="fade-up">
+            <h2 class="section-title">Portfólio</h2>
+            <p class="section-subtitle">Alguns dos meus projetos mais recentes</p>
+        </div>
+        
+        <div class="portfolio-filters" data-aos="fade-up" data-aos-delay="200">
+            <button class="filter-btn active" data-filter="all">Todos</button>
+            <button class="filter-btn" data-filter="websites">Sites</button>
+            <button class="filter-btn" data-filter="systems">Sistemas</button>
+            <button class="filter-btn" data-filter="apps">Aplicativos</button>
+        </div>
+        
+        <div class="portfolio-grid">
+            <div class="portfolio-item websites" data-aos="fade-up" data-aos-delay="100">
+                <div class="portfolio-card">
+                    <div class="portfolio-image">
+                        <img src="{% static 'images/portfolio/ecommerce.jpg' %}" alt="E-commerce Moderno">
+                        <div class="portfolio-overlay">
+                            <div class="portfolio-links">
+                                <a href="#" class="portfolio-link"><i class="fas fa-eye"></i></a>
+                                <a href="#" class="portfolio-link"><i class="fas fa-external-link-alt"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portfolio-content">
+                        <h3>E-commerce Moderno</h3>
+                        <p>Loja virtual completa com sistema de pagamento integrado e painel administrativo.</p>
+                        <div class="portfolio-tech">
+                            <span class="tech-tag">React</span>
+                            <span class="tech-tag">Node.js</span>
+                            <span class="tech-tag">MongoDB</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="portfolio-item systems" data-aos="fade-up" data-aos-delay="200">
+                <div class="portfolio-card">
+                    <div class="portfolio-image">
+                        <img src="{% static 'images/portfolio/dashboard.png' %}" alt="Sistema de Gestão">
+                        <div class="portfolio-overlay">
+                            <div class="portfolio-links">
+                                <a href="#" class="portfolio-link"><i class="fas fa-eye"></i></a>
+                                <a href="#" class="portfolio-link"><i class="fas fa-external-link-alt"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portfolio-content">
+                        <h3>Sistema de Gestão</h3>
+                        <p>Plataforma completa para gestão de clientes, vendas e relatórios em tempo real.</p>
+                        <div class="portfolio-tech">
+                            <span class="tech-tag">Django</span>
+                            <span class="tech-tag">PostgreSQL</span>
+                            <span class="tech-tag">Chart.js</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="portfolio-item apps" data-aos="fade-up" data-aos-delay="300">
+                <div class="portfolio-card">
+                    <div class="portfolio-image">
+                        <img src="{% static 'images/portfolio/mobile-app.png' %}" alt="App de Delivery">
+                        <div class="portfolio-overlay">
+                            <div class="portfolio-links">
+                                <a href="#" class="portfolio-link"><i class="fas fa-eye"></i></a>
+                                <a href="#" class="portfolio-link"><i class="fas fa-external-link-alt"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portfolio-content">
+                        <h3>App de Delivery</h3>
+                        <p>Aplicativo móvel para delivery com rastreamento em tempo real e pagamento integrado.</p>
+                        <div class="portfolio-tech">
+                            <span class="tech-tag">React Native</span>
+                            <span class="tech-tag">Firebase</span>
+                            <span class="tech-tag">Maps API</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="portfolio-item websites" data-aos="fade-up" data-aos-delay="400">
+                <div class="portfolio-card">
+                    <div class="portfolio-image">
+                        <img src="{% static 'images/portfolio/portfolio.png' %}" alt="Landing Page Corporativa">
+                        <div class="portfolio-overlay">
+                            <div class="portfolio-links">
+                                <a href="#" class="portfolio-link"><i class="fas fa-eye"></i></a>
+                                <a href="#" class="portfolio-link"><i class="fas fa-external-link-alt"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portfolio-content">
+                        <h3>Landing Page Corporativa</h3>
+                        <p>Site institucional com design moderno e otimizado para conversão de leads.</p>
+                        <div class="portfolio-tech">
+                            <span class="tech-tag">HTML5</span>
+                            <span class="tech-tag">CSS3</span>
+                            <span class="tech-tag">JavaScript</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section id="testimonials" class="testimonials">
+    <div class="container">
+        <div class="section-header" data-aos="fade-up">
+            <h2 class="section-title">Depoimentos</h2>
+            <p class="section-subtitle">O que meus clientes dizem sobre meu trabalho</p>
+        </div>
+        
+        <div class="testimonials-slider" data-aos="fade-up" data-aos-delay="200">
+            <div class="testimonial-item active">
+                <div class="testimonial-content">
+                    <div class="testimonial-text">
+                        <i class="fas fa-quote-left"></i>
+                        <p>
+                            "Trabalho excepcional! O desenvolvedor entregou exatamente o que precisávamos, 
+                            no prazo e com qualidade superior. Nosso e-commerce aumentou as vendas em 150% 
+                            após o lançamento."
+                        </p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-image">
+                            <img src="{% static 'images/testimonials/client1.jpg' %}" alt="Maria Silva">
+                        </div>
+                        <div class="author-info">
+                            <h4>João Santos</h4>
+                            <span>Diretor, TechCorp</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="testimonial-item">
+                <div class="testimonial-content">
+                    <div class="testimonial-text">
+                        <i class="fas fa-quote-left"></i>
+                        <p>
+                            "Profissional muito competente e dedicado. O sistema de gestão desenvolvido 
+                            revolucionou nossa operação. Recomendo sem hesitação!"
+                        </p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-image">
+                            <img src="{% static 'images/testimonials/client2.jpg' %}" alt="João Santos">
+                        </div>
+                        <div class="author-info">
+                            <h4>João Santos</h4>
+                            <span>CEO, Fashion Store</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="testimonial-item">
+                <div class="testimonial-content">
+                    <div class="testimonial-text">
+                        <i class="fas fa-quote-left"></i>
+                        <p>
+                            "Excelente comunicação e entrega impecável. O aplicativo ficou melhor do que 
+                            imaginávamos. Definitivamente voltaremos a trabalhar juntos."
+                        </p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-image">
+                            <img src="{% static 'images/testimonials/client3.jpg' %}" alt="Ana Costa">
+                        </div>
+                        <div class="author-info">
+                            <h4>Ana Costa</h4>
+                            <span>Fundadora, StartupXYZ</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="testimonial-navigation">
+            <button class="testimonial-prev"><i class="fas fa-chevron-left"></i></button>
+            <div class="testimonial-dots">
+                <span class="dot active" data-slide="0"></span>
+                <span class="dot" data-slide="1"></span>
+                <span class="dot" data-slide="2"></span>
+            </div>
+            <button class="testimonial-next"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="contact">
+    <div class="container">
+        <div class="section-header" data-aos="fade-up">
+            <h2 class="section-title">Entre em Contato</h2>
+            <p class="section-subtitle">Vamos transformar sua ideia em realidade</p>
+        </div>
+        
+        <div class="contact-content">
+            <div class="contact-info" data-aos="fade-right">
+                <h3>Vamos conversar sobre seu projeto</h3>
+                <p>
+                    Estou sempre disponível para discutir novas oportunidades e 
+                    ajudar você a alcançar seus objetivos digitais.
+                </p>
+                
+                <div class="contact-methods">
+                    <div class="contact-method">
+                        <div class="method-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="method-info">
+                            <h4>Email</h4>
+                            <p>baptaro.tech@hotmail.com</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-method">
+                        <div class="method-icon">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <div class="method-info">
+                            <h4>WhatsApp</h4>
+                            <p>(24) 98135-4211</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-method">
+                        <div class="method-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="method-info">
+                            <h4>Localização</h4>
+                            <p>Petrópolis, RJ - Brasil</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="response-time">
+                    <i class="fas fa-clock"></i>
+                    <span>Resposta em até 2 horas</span>
+                </div>
+            </div>
+            
+            <div class="contact-form-container" data-aos="fade-left">
+                <form class="contact-form" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    
+                    <div class="form-group">
+                        <label for="name">Nome Completo *</label>
+                        <input type="text" id="name" name="name" required>
+                        <span class="form-error" id="name-error"></span>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="whatsapp">WhatsApp *</label>
+                            <input type="tel" id="whatsapp" name="whatsapp" placeholder="(11) 99999-9999" required>
+                            <span class="form-error" id="whatsapp-error"></span>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email *</label>
+                            <input type="email" id="email" name="email" required>
+                            <span class="form-error" id="email-error"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="project_description">Descrição do Projeto *</label>
+                        <textarea id="project_description" name="project_description" rows="5" 
+                                  placeholder="Conte-me sobre seu projeto, objetivos e expectativas..." required></textarea>
+                        <span class="form-error" id="project_description-error"></span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="attachment">Anexar Arquivo (Briefing/Documento)</label>
+                        <div class="file-upload">
+                            <input type="file" id="attachment" name="attachment" accept=".pdf,.doc,.docx,.txt">
+                            <label for="attachment" class="file-upload-label">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <span>Clique para selecionar ou arraste o arquivo aqui</span>
+                            </label>
+                        </div>
+                        <small>Formatos aceitos: PDF, DOC, DOCX, TXT (máx. 10MB)</small>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-submit">
+                        <span class="btn-text">Enviar Mensagem</span>
+                        <span class="btn-loading">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            Enviando...
+                        </span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+

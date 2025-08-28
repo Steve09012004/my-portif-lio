@@ -1,0 +1,249 @@
+{% extends 'dashboard/base.html' %}
+
+{% block title %}Dashboard - Início{% endblock %}
+{% block page_title %}Painel de Controle{% endblock %}
+
+{% block content %}
+<!-- Statistics Cards -->
+<div class="row">
+    <div class="col-md-3">
+        <div class="stat-card">
+            <div class="stat-number">{{ total_contacts }}</div>
+            <div class="stat-label">
+                <i class="fas fa-envelope me-1"></i>Total de Contatos
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card secondary">
+            <div class="stat-number">{{ unread_contacts }}</div>
+            <div class="stat-label">
+                <i class="fas fa-envelope-open me-1"></i>Não Lidas
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card success">
+            <div class="stat-number">{{ total_views }}</div>
+            <div class="stat-label">
+                <i class="fas fa-eye me-1"></i>Total de Visualizações
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card warning">
+            <div class="stat-number">{{ unique_visitors }}</div>
+            <div class="stat-label">
+                <i class="fas fa-users me-1"></i>Visitantes Únicos
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Today's Statistics -->
+<div class="row">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body text-center">
+                <h5 class="card-title">Hoje</h5>
+                <div class="row">
+                    <div class="col">
+                        <h3 class="text-primary">{{ today_contacts }}</h3>
+                        <small class="text-muted">Contatos</small>
+                    </div>
+                    <div class="col">
+                        <h3 class="text-success">{{ today_views }}</h3>
+                        <small class="text-muted">Visualizações</small>
+                    </div>
+                    <div class="col">
+                        <h3 class="text-info">{{ today_visitors }}</h3>
+                        <small class="text-muted">Visitantes</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h5>Atividade dos Últimos 7 Dias</h5>
+            </div>
+            <div class="card-body">
+                <canvas id="activityChart" height="100"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Recent Contacts and Top Countries -->
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5>Contatos Recentes</h5>
+                <a href="{% url 'dashboard:contacts_list' %}" class="btn btn-primary btn-sm">
+                    Ver Todos
+                </a>
+            </div>
+            <div class="card-body">
+                {% if recent_contacts %}
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>Email</th>
+                                    <th>Data</th>
+                                    <th>Status</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for contact in recent_contacts %}
+                                <tr>
+                                    <td>
+                                        <strong>{{ contact.name }}</strong>
+                                    </td>
+                                    <td>{{ contact.email }}</td>
+                                    <td>{{ contact.created_at|date:"d/m/Y H:i" }}</td>
+                                    <td>
+                                        {% if contact.is_read %}
+                                            <span class="badge bg-success">Lida</span>
+                                        {% else %}
+                                            <span class="badge bg-warning">Não lida</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <a href="{% url 'dashboard:contact_detail' contact.id %}" class="btn btn-outline-primary btn-sm">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    <div class="text-center py-4">
+                        <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
+                        <p class="text-muted">Nenhum contato encontrado</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <!-- Top Countries -->
+        <div class="card mb-3">
+            <div class="card-header">
+                <h5>Top Países (30 dias)</h5>
+            </div>
+            <div class="card-body">
+                {% if top_countries %}
+                    {% for country in top_countries %}
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span>{{ country.country }}</span>
+                        <span class="badge bg-primary">{{ country.count }}</span>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <p class="text-muted text-center">Nenhum dado disponível</p>
+                {% endif %}
+            </div>
+        </div>
+        
+        <!-- Device Stats -->
+        <div class="card">
+            <div class="card-header">
+                <h5>Dispositivos (30 dias)</h5>
+            </div>
+            <div class="card-body">
+                {% if device_stats %}
+                    <canvas id="deviceChart" height="200"></canvas>
+                {% else %}
+                    <p class="text-muted text-center">Nenhum dado disponível</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Activity Chart
+const activityCtx = document.getElementById('activityChart').getContext('2d');
+const activityChart = new Chart(activityCtx, {
+    type: 'line',
+    data: {
+        labels: [{% for stat in daily_stats %}'{{ stat.date }}'{% if not forloop.last %},{% endif %}{% endfor %}],
+        datasets: [{
+            label: 'Contatos',
+            data: [{% for stat in daily_stats %}{{ stat.contacts }}{% if not forloop.last %},{% endif %}{% endfor %}],
+            borderColor: '#667eea',
+            backgroundColor: 'rgba(102, 126, 234, 0.1)',
+            tension: 0.4
+        }, {
+            label: 'Visualizações',
+            data: [{% for stat in daily_stats %}{{ stat.views }}{% if not forloop.last %},{% endif %}{% endfor %}],
+            borderColor: '#4facfe',
+            backgroundColor: 'rgba(79, 172, 254, 0.1)',
+            tension: 0.4
+        }, {
+            label: 'Visitantes',
+            data: [{% for stat in daily_stats %}{{ stat.visitors }}{% if not forloop.last %},{% endif %}{% endfor %}],
+            borderColor: '#43e97b',
+            backgroundColor: 'rgba(67, 233, 123, 0.1)',
+            tension: 0.4
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        },
+        plugins: {
+            legend: {
+                position: 'top',
+            }
+        }
+    }
+});
+
+// Device Chart
+{% if device_stats %}
+const deviceCtx = document.getElementById('deviceChart').getContext('2d');
+const deviceChart = new Chart(deviceCtx, {
+    type: 'doughnut',
+    data: {
+        labels: [{% for stat in device_stats %}'{{ stat.device_type|capfirst }}'{% if not forloop.last %},{% endif %}{% endfor %}],
+        datasets: [{
+            data: [{% for stat in device_stats %}{{ stat.count }}{% if not forloop.last %},{% endif %}{% endfor %}],
+            backgroundColor: [
+                '#667eea',
+                '#4facfe',
+                '#43e97b',
+                '#f093fb',
+                '#ffa726'
+            ]
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                position: 'bottom',
+            }
+        }
+    }
+});
+{% endif %}
+</script>
+{% endblock %}
+

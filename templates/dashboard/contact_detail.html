@@ -1,0 +1,52 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+
+{% block title %}Detalhes do Contato{% endblock %}
+
+{% block content %}
+<div class="dashboard-header">
+    <h1><i class="fas fa-info-circle"></i> Detalhes da Mensagem</h1>
+    <p>Visualize os detalhes completos da mensagem e adicione observações.</p>
+</div>
+
+<div class="dashboard-card">
+    <div class="card-header">
+        <h2>Informações do Contato</h2>
+        <div class="card-actions">
+            <a href="{% url 'dashboard:contacts_list' %}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Voltar para a Lista</a>
+        </div>
+    </div>
+    <div class="card-body">
+        <p><strong>Nome:</strong> {{ contact.name }}</p>
+        <p><strong>WhatsApp:</strong> {{ contact.whatsapp }}</p>
+        <p><strong>Email:</strong> {{ contact.email }}</p>
+        <p><strong>Data de Contato:</strong> {{ contact.created_at|date:"d/m/Y H:i" }}</p>
+        <p><strong>Status:</strong> {% if contact.is_read %}Lida{% else %}Não Lida{% endif %}</p>
+        {% if contact.attachment %}
+        <p><strong>Anexo:</strong> <a href="{{ contact.attachment.url }}" target="_blank" class="btn btn-sm btn-secondary"><i class="fas fa-download"></i> Download</a> ({{ contact.attachment_filename }})</p>
+        {% else %}
+        <p><strong>Anexo:</strong> Nenhum</p>
+        {% endif %}
+        <hr>
+        <p><strong>Descrição do Projeto:</strong></p>
+        <p>{{ contact.project_description }}</p>
+    </div>
+</div>
+
+<div class="dashboard-card mt-4">
+    <div class="card-header">
+        <h2>Observações</h2>
+    </div>
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="notes" class="form-label">Adicionar/Editar Observações:</label>
+                <textarea class="form-control" id="notes" name="notes" rows="5">{{ contact.notes }}</textarea>
+            </div>
+            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Salvar Observações</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+

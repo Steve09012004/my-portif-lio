@@ -1,0 +1,181 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+
+{% block title %}Contatos{% endblock %}
+
+{% block content %}
+<div class="dashboard-header">
+    <h1><i class="fas fa-envelope"></i> Contatos Recebidos</h1>
+    <p>Gerencie todas as mensagens enviadas através do formulário de contato.</p>
+</div>
+
+<div class="dashboard-card">
+    <div class="card-header">
+        <h2>Lista de Mensagens</h2>
+        <div class="card-actions">
+            <input type="text" id="searchInput" placeholder="Buscar por nome ou email..." class="form-control search-input">
+            <button class="btn btn-primary" id="exportCsvBtn"><i class="fas fa-file-csv"></i> Exportar CSV</button>
+            <button class="btn btn-info" id="exportPdfBtn"><i class="fas fa-file-pdf"></i> Exportar PDF</button>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped" id="contactsTable">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>WhatsApp</th>
+                        <th>Email</th>
+                        <th>Descrição</th>
+                        <th>Anexo</th>
+                        <th>Data</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for contact in page_obj %}
+                    <tr>
+                        <td>{{ contact.name }}</td>
+                        <td>{{ contact.whatsapp }}</td>
+                        <td>{{ contact.email }}</td>
+                        <td>{{ contact.project_description|truncatechars:50 }}</td>
+                        <td>
+                            {% if contact.attachment %}
+                            <a href="{{ contact.attachment.url }}" target="_blank" class="btn btn-sm btn-secondary"><i class="fas fa-download"></i> Download</a>
+                            {% else %}
+                            Nenhum
+                            {% endif %}
+                        </td>
+                        <td>{{ contact.created_at|date:"d/m/Y H:i" }}</td>
+                        <td>
+                            <button class="btn btn-sm btn-primary view-contact-btn" data-id="{{ contact.id }}"><i class="fas fa-eye"></i> Ver</button>
+                            <button class="btn btn-sm btn-danger delete-contact-btn" data-id="{{ contact.id }}"><i class="fas fa-trash"></i> Excluir</button>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="7" class="text-center">Nenhuma mensagem encontrada.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para Visualizar Contato -->
+<div class="modal fade" id="viewContactModal" tabindex="-1" aria-labelledby="viewContactModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="viewContactModalLabel">Detalhes da Mensagem</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p><strong>Nome:</strong> <span id="modalContactName"></span></p>
+                <p><strong>WhatsApp:</strong> <span id="modalContactWhatsapp"></span></p>
+                <p><strong>Email:</strong> <span id="modalContactEmail"></span></p>
+                <p><strong>Descrição:</strong> <span id="modalContactDescription"></span></p>
+                <p><strong>Anexo:</strong> <span id="modalContactAttachment"></span></p>
+                <p><strong>Data:</strong> <span id="modalContactDate"></span></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const searchInput = document.getElementById("searchInput");
+        const contactsTable = document.getElementById("contactsTable");
+        const tableRows = contactsTable.querySelectorAll("tbody tr");
+        const viewContactModal = new bootstrap.Modal(document.getElementById("viewContactModal"));
+
+        searchInput.addEventListener("keyup", function() {
+            const searchTerm = searchInput.value.toLowerCase();
+            tableRows.forEach(row => {
+                const name = row.children[0].textContent.toLowerCase();
+                const email = row.children[2].textContent.toLowerCase();
+                if (name.includes(searchTerm) || email.includes(searchTerm)) {
+                    row.style.display = "";
+                } else {
+                    row.style.display = "none";
+                }
+            });
+        });
+
+        contactsTable.addEventListener("click", function(event) {
+            if (event.target.classList.contains("view-contact-btn")) {
+                const contactId = event.target.dataset.id;
+                fetch(`/dashboard/contacts/${contactId}/`)
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById("modalContactName").textContent = data.name;
+                        document.getElementById("modalContactWhatsapp").textContent = data.whatsapp;
+                        document.getElementById("modalContactEmail").textContent = data.email;
+                        document.getElementById("modalContactDescription").textContent = data.description;
+                        if (data.attachment) {
+                            document.getElementById("modalContactAttachment").innerHTML = `<a href="${data.attachment}" target="_blank" class="btn btn-sm btn-secondary"><i class="fas fa-download"></i> Download</a>`;
+                        } else {
+                            document.getElementById("modalContactAttachment").textContent = "Nenhum";
+                        }
+                        document.getElementById("modalContactDate").textContent = new Date(data.created_at).toLocaleString("pt-BR");
+                        viewContactModal.show();
+                    })
+                    .catch(error => console.error("Erro ao buscar detalhes do contato:", error));
+            }
+
+            if (event.target.classList.contains("delete-contact-btn")) {
+                if (confirm("Tem certeza que deseja excluir esta mensagem?")) {
+                    const contactId = event.target.dataset.id;
+                    fetch(`/dashboard/contacts/${contactId}/delete/`, {
+                        method: "POST",
+                        headers: {
+                            "X-CSRFToken": getCookie("csrftoken"),
+                            "Content-Type": "application/json"
+                        }
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            event.target.closest("tr").remove();
+                            alert("Mensagem excluída com sucesso!");
+                        } else {
+                            alert("Erro ao excluir mensagem.");
+                        }
+                    })
+                    .catch(error => console.error("Erro ao excluir contato:", error));
+                }
+            }
+        });
+
+        document.getElementById("exportCsvBtn").addEventListener("click", function() {
+            window.location.href = "/dashboard/contacts/export/csv/";
+        });
+
+        document.getElementById("exportPdfBtn").addEventListener("click", function() {
+            window.location.href = "/dashboard/contacts/export/pdf/";
+        });
+
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.startsWith(name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    });
+</script>
+{% endblock %}
+
